@@ -22,3 +22,16 @@
     - 모든 Conv Layer에 $3 \times 3$ 필터, Stride $1$, Padding $1$ 적용.
     - Pooling은 $2 \times 2$ Max Pooling (Stride $2$) 사용.
     - 복잡한 변화 없이 채널 수만 2배씩 늘려가는($64 \to 128 \to 256 \to 512$) 규칙적인 구조.
+
+### **3. 핵심 기술 1: 3x3 Convolution의 활용 (Factorization)**
+
+- **기존 방식:** AlexNet은 $11 \times 11$, ZFNet은 $7 \times 7$ 등 큰 커널을 사용하여 한 번에 넓은 영역(Receptive Field)을 보려 했음.
+- **VGGNet의 선택:** 큰 필터 1개를 작은 필터 여러 개로 쪼개서 사용.
+    - $3 \times 3$ Conv 2개를 쌓으면 $\approx$ $5 \times 5$ Conv 1개와 동일한 Receptive Field.
+    - $3 \times 3$ Conv 3개를 쌓으면 $\approx$ $7 \times 7$ Conv 1개와 동일한 Receptive Field.
+- **이점:**
+    1. **비선형성(Non-linearity) 증가:** 레이어를 여러 번 거치면서 ReLU가 더 많이 포함되어, 모델이 더 복잡한 특징을 잘 학습함.
+    2. **파라미터 수 감소:**
+        1. $7 \times 7$ 1개: $49C^2$ 파라미터
+        2.  $3 \times 3$ 3개: $3 \times (9C^2) = 27C^2$ 파라미터
+        3. 결과적으로 **더 깊으면서도 파라미터 효율이 좋음.**
