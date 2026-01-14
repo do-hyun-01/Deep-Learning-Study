@@ -35,3 +35,13 @@
         1. $7 \times 7$ 1개: $49C^2$ 파라미터
         2.  $3 \times 3$ 3개: $3 \times (9C^2) = 27C^2$ 파라미터
         3. 결과적으로 **더 깊으면서도 파라미터 효율이 좋음.**
+
+### **4. 핵심 기술 2: Fully Convolutional Network 관점과 1x1 Conv**
+
+- **1x1 Convolution:**
+    - Network in Network(NIN) 논문의 개념 차용.
+    - Receptive Field에는 영향을 주지 않으면서 비선형성(ReLU)을 추가하고 채널 수를 조절하는 역할.
+- **Dense to Conv (테스트 시):**
+    - 학습된 FC(Fully Connected) Layer를 $1 \times 1$ Conv Layer로 변환하여 사용 가능.
+    - 이렇게 하면 입력 이미지 크기가 $224 \times 224$로 고정되지 않아도 되며, 이미지를 자르지(Crop) 않고 전체를 입력으로 넣는 **Sliding Window** 방식 적용이 가능해짐.
+    ****
