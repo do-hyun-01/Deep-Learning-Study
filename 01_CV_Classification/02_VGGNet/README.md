@@ -45,3 +45,11 @@
     - 학습된 FC(Fully Connected) Layer를 $1 \times 1$ Conv Layer로 변환하여 사용 가능.
     - 이렇게 하면 입력 이미지 크기가 $224 \times 224$로 고정되지 않아도 되며, 이미지를 자르지(Crop) 않고 전체를 입력으로 넣는 **Sliding Window** 방식 적용이 가능해짐.
     ****
+
+### **5. 기타 기술적 디테일 (Technical Details)**
+
+- **LRN 제거:** AlexNet에서 썼던 Local Response Normalization(LRN)이 성능 향상에 도움이 되지 않고 메모리만 차지한다고 판단하여 제거.
+- **Multi-scale Training (Scale Jittering):**
+    - 학습 시 이미지의 짧은 변(S)을 256에서 512 사이의 값으로 무작위 조절(Resizing)한 후 $224 \times 224$로 크롭.
+    - 다양한 크기의 객체를 인식하도록 학습하는 데이터 증강 기법.
+- **초기화 전략:** 깊은 망은 학습이 어려우므로, 얕은 구조(11 layer)를 먼저 학습시킨 가중치로 깊은 구조를 초기화함 (후에는 Xavier 초기화로 해결).
